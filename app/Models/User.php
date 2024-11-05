@@ -17,10 +17,17 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user_pivot');
+    }
+
     protected $fillable = [
         'name',
         'email',
         'password',
+        'status',
     ];
 
     /**

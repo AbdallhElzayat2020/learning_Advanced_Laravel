@@ -2,37 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ActiveUsersJob;
+use App\Models\User;
+use App\Services\PriceServices;
+
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // use PriceTrait;
+
+    // protected $priceServices;
+    // public function __construct(PriceServices $priceServices)
+    // {
+    //     $this->priceServices = $priceServices;
+    // }
+
     public function index()
     {
-        //
+        // $priceData['price'] = $this->priceServices->concvertPrice(100);
+        // dd($priceData);
+        $users_id = User::where('status', 0)->pluck('id');
+
+
+        ActiveUsersJob::dispatch($users_id)->delay(now()->second(40));
+
+        return "جاري العمل في الوقت الحالي";
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
         //
@@ -46,17 +56,12 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
         //
